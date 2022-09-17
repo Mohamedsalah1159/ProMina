@@ -20,11 +20,16 @@ class Shipment extends Model
         'created_at',
         'updated_at'
     ];
-
-    /*   Relations   */
-
-    //
-    public function picture(){
-        return $this->hasMany('App\Models\Picture', 'album_id', 'id');
+    //get status from db and edit it
+    public function getStatus(){
+        if($this->status == 0){
+            return 'Pending';
+        }elseif($this->status == 1){
+            return 'Progress';
+        }else{
+            return 'Done';
+        }
     }
+
+    
 }

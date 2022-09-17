@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePicturesTable extends Migration
+class CreateJournalsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreatePicturesTable extends Migration
      */
     public function up()
     {
-        Schema::create('journal_entity', function (Blueprint $table) {
+        Schema::create('journals', function (Blueprint $table) {
             $table->id();
             $table->float('amount');
             $table->enum('type', ['depetCach', 'creditRevenue', 'creditPayable']);
-            //$table->foreign('album_id')->references('id')->on('albums');
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ class CreatePicturesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pictures');
+        Schema::dropIfExists('journals');
     }
 }

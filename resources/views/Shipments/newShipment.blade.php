@@ -19,10 +19,120 @@
         <style>
             body {
                 font-family: 'Nunito', sans-serif;
+                direction: rtl;
+
+            }
+            .body{
+              margin-top: 20px;
+              width: 85%;
+              direction: ltr;
+
+            }
+            label{
+              font-size: 20px;
+    font-weight: bold;
+    margin-top: 15px;
+
+
+            }
+            button{
+              width: 15%;
+    margin: 20px 25%;
+            }
+            .form-control{
+              width:65%;
+              margin-top: 7px;
+            }
+            table{
+              direction: ltr;
+            }
+            header{
+              position: fixed;
+    background-color: #505b66;
+    width: 14%;
+    height: 100%;
+    border-radius: 0 20px 20px 0;
+    text-align: center;
+    top:0;
+    left: 0;
+    
+            }
+            thead{
+              background-color: #505b66;
+
+            }
+            h1{
+              
+    margin-top: 20px;
+    margin-bottom: 40px;
+    color: #3a0005;
+
+            }
+            ul{
+              list-style-type: none;
+    padding: 0;
+            }
+            li{
+              text-align: center;
+              margin-bottom: 20px;
+            }
+            li:hover{
+              transition: all 0.2s ease-in-out;
+              background-color: #cad6e9;
+              color:#0d6efd;
+            }
+            a{
+              font-size:20px;
+              font-weight: bold;
+              width: 100%
+            }
+
+            .new{
+              background-color: #505b66;
+    text-align: center;
+    display: block;
+    width: 20%;
+    margin: 20px auto;
+    padding: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 20px;
+            }
+            .new:hover{
+              transition: all 0.2s ease-in-out;
+              background-color: #cad6e9;
+            }
+            .d-flex{
+              direction: ltr;
+            }
+
+            .page-link{
+              background-color: #505b66;
+              color: black;
+            }
+            
+            .page-link:hover{
+              transition: all 0.2s ease-in-out;
+              background-color: #cad6e9;
+              border-color:#cad6e9
             }
         </style>
     </head>
     <body class="antialiased">
+    <header class="header" role="banner">
+  <h1 class="logo">
+    <a href="#">Camel Case</a>
+  </h1>
+  <div class="nav-wrap">
+    <nav class="main-nav" role="navigation">
+      <ul class="unstyled list-hover-slide">
+        <li><a href="{{route('Shipment')}}">Shipments</a></li>
+        <li><a href="{{route('journal')}}">JournalEntity</a></li>
+
+      </ul>
+    </nav>
+  </div>
+</header>
         <div class="body">
         @include('includes.alerts.success')
         @include('includes.alerts.error')

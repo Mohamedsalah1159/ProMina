@@ -17,8 +17,7 @@
         </style>
 
         <style>
-
-body {
+            body {
                 font-family: 'Nunito', sans-serif;
                 direction: rtl;
 
@@ -36,8 +35,9 @@ body {
 
 
             }
-            .btn{
-              width: 50%;
+            button{
+              width: 15%;
+    margin: 20px 25%;
             }
             .form-control{
               width:65%;
@@ -136,55 +136,30 @@ body {
         <div class="body">
         @include('includes.alerts.success')
         @include('includes.alerts.error')
-            <a class="new" href="{{route('addNewShipment')}}">Create New Shipment</a>
-            <a class="new" href="{{route('journal.store')}}">Make journal Entity Today</a>
 
         <table class="table">
   <thead class="thead-dark">
     <tr>
       <th scope="col">#</th>
-      <th scope="col">Code</th>
-      <th scope="col">Shipper</th>
-      <th scope="col">Image</th>
-      <th scope="col">Weight</th>
-      <th scope="col">Description</th>
-      <th scope="col">Price</th>
-      <th scope="col">Status</th>
+      <th scope="col">amount</th>
+      <th scope="col">type</th>
       <th scope="col">Created At</th>
       <th scope="col">Updated At</th>
-      <th scope="col">progress</th>
     </tr>
   </thead>
   <tbody>
   
   <?php $i=0 ?>
-  @isset($shipments)
-    @foreach($shipments as $shipment)
+  @isset($journals)
+    @foreach($journals as $journal)
     <?php $i++?>
       <tr>
         <th scope="row">{{$i}}</th>
-        <td>{{$shipment->code}}</td>
-        <td>{{$shipment->shipper}}</td>
-        <td><img src='{{base_path("public\pictures ". "\\" . $shipment->image)}}'></td>
-        <td>{{$shipment->weight}}</td>
-        <td>{{$shipment->description}}</td>
-        <td>{{$shipment->price}}</td>
-        <td>{{$shipment->getStatus()}}</td>
-        <td>{{$shipment->created_at}}</td>
-        <td>{{$shipment->Updated_at}}</td>
-        @if($shipment->status == 0)
-        <td class="d-flex justify-content-around"><a href="{{route('Shipment.progress', $shipment->id)}}" class="btn btn-success">Progress</button>
-        <a href="{{route('Shipment.done', $shipment->id)}}" class="btn btn-success">Done</a></td>
-        @elseif($shipment->status == 1)
-        <td><a href="{{route('Shipment.pending', $shipment->id)}}" class="btn btn-success">Pending</a>
-        <a href="{{route('Shipment.done', $shipment->id)}}" class="btn btn-success">Done</a></td>
-        @else
-        <td><a href="#" class="btn btn-success disabled">Done</a></td>
-        @endif
-        
-        <td class="d-flex justify-content-around"><a href="{{route('Shipment.edit', $shipment->id)}}" class="btn btn-success">Edit</a>
-          <a onclick="return confirm('are you sure?')" href="{{route('Shipment.delete', $shipment->id)}}" class="btn btn-danger">Delete</a></td>
-      </tr>
+        <td>{{$journal->amount}}</td>
+        <td>{{$journal->type}}</td>
+        <td>{{$journal->created_at}}</td>
+        <td>{{$journal->Updated_at}}</td>
+
       @endforeach
     @endisset
   
@@ -193,7 +168,7 @@ body {
 
 </table>
     <div class="d-flex">
-                {!! $shipments->links() !!}
+                {!! $journals->links() !!}
             </div>
 
 

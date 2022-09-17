@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Picture extends Model
+class JournalEntity extends Model
 {
-    protected $table = 'journal_entity';
+    protected $table = 'journals';
     protected $fillable =[
         'id',
         'amount',
@@ -15,13 +15,6 @@ class Picture extends Model
         'created_at',
         'updated_at'
     ];
-    protected $hidden = [
-        'created_at',
-        'updated_at'
-    ];
-    /*   Relations   */
-    ///
-    public function album(){
-        return $this->belongsTo('App\Models\Album', 'album_id', 'id');
-    }
+
+
 }

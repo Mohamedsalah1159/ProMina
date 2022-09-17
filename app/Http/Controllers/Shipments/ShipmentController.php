@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Shipments;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Shipment;
-use App\Models\Picture;
 use App\Traits\SavingImageTrait;
-use App\Http\Requests\Albums\ShipmentRequest;
-use App\Http\Requests\Albums\AlbumRequestUpdate;
+use App\Http\Requests\Shipments\ShipmentRequest;
+use App\Http\Requests\Shipments\ShipmentRequestUpdate;
+use Illuminate\Support\Str;
 
 class ShipmentController extends Controller
 {
@@ -48,70 +48,122 @@ class ShipmentController extends Controller
             return redirect()->route('addNewShipment')->with('error', 'please try again later');
         }
     }
-    public function edit($id){
+    public function ChangeStatusToPending($id){
         try{
-            $album= Album::find($id);
-            if(!$album){
-                return redirect()->route('albums')->with('error', 'this album doesn\'t exists');
+            $shipment = Shipment::find($id);
+            if(!$shipment){
+                return redirect()->route('Shipment')->with('error', 'this shipment doesn\'t exists');
             }
-            $picsOfAlbum = Picture::select('id','name', 'created_at')->where('album_id', $id)->paginate(PAGINATION_COUNT);
-            return view('Album.edit', compact(['album', 'picsOfAlbum']));
+            $shipment->update([
+                'status' => 0
+            ]);
+            return redirect()->route('Shipment')->with('success', 'the status is changed successfully');
+
+
         }catch(\Exception $ex){
-            return redirect()->route('albums')->with('error', 'please try again later');
+            return redirect()->route('Shipment')->with('error', 'please try again later');
+
         }
     }
-    public function update(AlbumRequestUpdate $request, $id){
+    
+    public function ChangeStatusToProgress($id){
         try{
-            $album= Album::find($id);
-            if(!$album){
-                return redirect()->route('albums')->with('error', 'this album doesn\'t exists');
+            $shipment = Shipment::find($id);
+            if(!$shipment){
+                return redirect()->route('Shipment')->with('error', 'this shipment doesn\'t exists');
             }
-            //if has new request images 
-            if($request->hasFile('pic')){
-                foreach($request->pic as $newPic){
-                                // save pictures in folder
-                        $file_name = $this->saveFile($newPic, "pictures");
-
-
-                        // get last album id saved
-
-                        Picture::create([
-                            'name' => $file_name,
-                            'album_id' => $album->id
-                        ]);
-                    }
-
-                }
-
-            //update in db
-            $album->update([
-                'name' => $request->name
+            $shipment->update([
+                'status' => 1
             ]);
+            return redirect()->route('Shipment')->with('success', 'the status is changed successfully');
 
-            return redirect()->route('albums')->with('success', 'this album is updated successfuly');
 
         }catch(\Exception $ex){
-            return redirect()->route('albums')->with('error', 'please try again later');
+            return redirect()->route('Shipment')->with('error', 'please try again later');
+
+        }
+    }
+    public function ChangeStatusToDone($id){
+        try{
+            $shipment = Shipment::find($id);
+            if(!$shipment){
+                return redirect()->route('Shipment')->with('error', 'this shipment doesn\'t exists');
+            }
+            $shipment->update([
+                'status' => 2
+            ]);
+            return redirect()->route('Shipment')->with('success', 'the status is changed successfully');
+
+
+        }catch(\Exception $ex){
+            return redirect()->route('Shipment')->with('error', 'please try again later');
+
+        }
+    }
+    public function edit($id){
+        try{
+            $shipment= Shipment::find($id);
+            if(!$shipment){
+                return redirect()->route('Shipment')->with('error', 'this Shipment doesn\'t exists');
+            }
+            return view('Shipments.edit', compact('shipment'));
+        }catch(\Exception $ex){
+            return redirect()->route('Shipment')->with('error', 'please try again later');
+        }
+    }
+    public function update(ShipmentRequestUpdate $request, $id){
+        try{
+            $shipment= Shipment::find($id);
+            if(!$shipment){
+                return redirect()->route('Shipment')->with('error', 'this shipment doesn\'t exists');
+            }
+            //if has new request images 
+            if($request->hasFile('image')){
+                // save pictures in folder
+                $file_name = $this->saveFile($request->image, "pictures");
+                //update in db
+                $shipment->update([
+                'image' => $file_name
+                ]);
+            }
+            if(($request->weight > 0) && ($request->weight <= 10)){
+                $price = 10;
+            }elseif(($request->weight > 10) && ($request->weight <= 25)){
+                $price = 100;
+            }else{
+                $price = 300;
+            }
+
+            //update in db
+            $shipment->update([
+                'code' => $request->code,
+                'shipper' => $request->shipper,
+                'weight' => $request->weight,
+                'description' => $request->description,
+                'price' => $price
+            ]);
+
+            return redirect()->route('Shipment')->with('success', 'this shipment is updated successfuly');
+
+        }catch(\Exception $ex){
+            return redirect()->route('Shipment')->with('error', 'please try again later');
         }
     }
     public function destroy($id){
         try{
-            $album= Album::find($id);
-            if(!$album){
-                return redirect()->route('albums')->with('error', 'this album is dosen\'t exists');
-
+            $shipment= Shipment::find($id);
+            if(!$shipment){
+                return redirect()->route('Shipment')->with('error', 'this shipment is dosen\'t exists');
             }
-            
-            $allData = Picture::select('*')->where('album_id', $id);
-            
-            //delete pics in album 
-            $allData->delete();
+            $image = Str::afterLast($shipment->image, 'assets/');
+            $image = base_path('public\pictures'. '\\' . $image);
+            unlink($image); //delete photo from folder
             //delete album
-            $album->delete();
-            return redirect()->route('albums')->with('success', 'the album is successfuly deleted');
+            $shipment->delete();
+            return redirect()->route('Shipment')->with('success', 'the shipment is successfuly deleted');
 
         }catch(\Exception $ex){
-            return redirect()->route('albums')->with('error', 'please try again later');
+            return redirect()->route('Shipment')->with('error', 'please try again later');
         }
     }
     

@@ -17,61 +17,162 @@
         </style>
 
         <style>
-            body {
+                        body {
                 font-family: 'Nunito', sans-serif;
+                direction: rtl;
+
+            }
+            .body{
+              margin-top: 20px;
+              width: 85%;
+              direction: ltr;
+
+            }
+            label{
+              font-size: 20px;
+    font-weight: bold;
+    margin-top: 15px;
+
+
+            }
+            button{
+              width: 15%;
+    margin: 20px 25%;
+            }
+            .form-control{
+              width:65%;
+              margin-top: 7px;
+            }
+            table{
+              direction: ltr;
+            }
+            header{
+              position: fixed;
+    background-color: #505b66;
+    width: 14%;
+    height: 100%;
+    border-radius: 0 20px 20px 0;
+    text-align: center;
+    top:0;
+    left: 0;
+    
+            }
+            thead{
+              background-color: #505b66;
+
+            }
+            h1{
+              
+    margin-top: 20px;
+    margin-bottom: 40px;
+    color: #3a0005;
+
+            }
+            ul{
+              list-style-type: none;
+    padding: 0;
+            }
+            li{
+              text-align: center;
+              margin-bottom: 20px;
+            }
+            li:hover{
+              transition: all 0.2s ease-in-out;
+              background-color: #cad6e9;
+              color:#0d6efd;
+            }
+            a{
+              font-size:20px;
+              font-weight: bold;
+              width: 100%
+            }
+
+            .new{
+              background-color: #505b66;
+    text-align: center;
+    display: block;
+    width: 20%;
+    margin: 20px auto;
+    padding: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 20px;
+            }
+            .new:hover{
+              transition: all 0.2s ease-in-out;
+              background-color: #cad6e9;
+            }
+            .d-flex{
+              direction: ltr;
+            }
+
+            .page-link{
+              background-color: #505b66;
+              color: black;
+            }
+            
+            .page-link:hover{
+              transition: all 0.2s ease-in-out;
+              background-color: #cad6e9;
+              border-color:#cad6e9
             }
         </style>
     </head>
     <body class="antialiased">
+    <header class="header" role="banner">
+  <h1 class="logo">
+    <a href="#">Camel Case</a>
+  </h1>
+  <div class="nav-wrap">
+    <nav class="main-nav" role="navigation">
+      <ul class="unstyled list-hover-slide">
+        <li><a href="{{route('Shipment')}}">Shipments</a></li>
+        <li><a href="{{route('journal')}}">JournalEntity</a></li>
+
+      </ul>
+    </nav>
+  </div>
+</header>
         <div class="body">
-            @include('includes.alerts.success')
-            @include('includes.alerts.error')
-        <form method="Post" action="{{route('album.update', $album->id)}}" enctype="multipart/form-data">
+        @include('includes.alerts.success')
+        @include('includes.alerts.error')
+        <form method="Post" action="{{route('Shipment.update', $shipment->id)}}" enctype="multipart/form-data">
         @csrf
   <div class="form-group">
-    <label for="exampleInputEmail1">Album Name</label>
-    <input type="text" class="form-control" name='name' value= '{{$album->name}}' id="albumName" >
-    @error('name')
-      <span class="text-danger">{{$message}}</span>
-    @enderror  
-</div>
-<div class="form-group">
-    <label for="exampleInputEmail1">Album Pictures</label>
-    <input type="file" class="form-control" name='pic[]' multiple id="albumPic" >
-    @error('pic')
+    <label for="exampleInputEmail1">Shippment Code</label>
+    <input type="text" class="form-control" name='code' id="shipmentCode" aria-describedby="emailHelp" value="{{$shipment->code}}">
+    @error('code')
       <span class="text-danger">{{$message}}</span>
     @enderror
   </div>
-  <table class="table">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Pictures</th>
-      <th scope="col">Created at</th>
-      <th scope="col">Process</th>
-    </tr>
-  </thead>
-  
-  <tbody>
-  
-<?php $i=0 ?>
-  @foreach($picsOfAlbum as $picture)
-  <?php $i++?>
-    <tr>
-      <th scope="row">{{$i}}</th>
-      <td>{{$picture->name}}</td>
-      <td>{{$picture->created_at}}</td>
-      <td class="d-flex justify-content-around">
-        <a onclick="return confirm('are you sure?')" href="{{route('pic.destroy', $picture->id)}}" class="btn btn-danger">Delete</a></td>
-    </tr>
-    @endforeach
-
-  </tbody>
-</table>
-<div class="d-flex">
-                {!! $picsOfAlbum->links() !!}
-            </div>
-
+  <div class="form-group">
+    <label for="exampleInputEmail1">Shipper</label>
+    <input type="text" class="form-control" name='shipper'  id="shipper" value="{{$shipment->shipper}}" >
+    @error('shipper')
+      <span class="text-danger">{{$message}}</span>
+    @enderror
+  </div>
+  <div class="form-group">
+    <label for="exampleInputEmail1">Shipment Image</label>
+    <input type="file" class="form-control" name='image'  id="shipmentImage" >
+    @error('image')
+      <span class="text-danger">{{$message}}</span>
+    @enderror
+  </div>
+  <div class="form-group">
+    <label for="exampleInputEmail1">Shipment Weight</label>
+    <input type="text" class="form-control" name='weight' id="shipmentWeight" value="{{$shipment->weight}}" >
+    @error('weight')
+      <span class="text-danger">{{$message}}</span>
+    @enderror
+  </div>
+  <div class="form-group">
+    <label for="exampleInputEmail1">Shipment Description</label>
+    <input type="text" class="form-control" name='description' id="shipmentDescription" value="{{$shipment->description}}" >
+    @error('description')
+      <span class="text-danger">{{$message}}</span>
+    @enderror
+  </div>
 
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
@@ -80,6 +181,7 @@
         <!-- JavaScript Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
     </body>
+
 </html>
 
 

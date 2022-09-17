@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Albums;
+namespace App\Http\Requests\Shipments;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ShipmentRequest extends FormRequest
+class ShipmentRequestUpdate extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,7 +26,7 @@ class ShipmentRequest extends FormRequest
         return [
             'code' => 'required|string|max:255|unique:shipments',
             'shipper' => 'required|string|max:255',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif',
+            'image' => 'image|mimes:jpeg,png,jpg,gif',
             'description' => 'required|string|max:255',
             'weight' => 'required|integer|between:0,199.99',
         ];
