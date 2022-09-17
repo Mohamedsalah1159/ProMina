@@ -4,7 +4,7 @@ namespace App\Http\Requests\Albums;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AlbumRequest extends FormRequest
+class ShipmentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +24,11 @@ class AlbumRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:255',
-            'pic' => 'required',
-            'pic.*' => 'image|mimes:jpeg,png,jpg,gif',
-            
+            'code' => 'required|string|max:255|unique:shipments',
+            'shipper' => 'required|string|max:255',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif',
+            'description' => 'required|string|max:255',
+            'weight' => 'required|integer|between:0,199.99',
         ];
     }
 }

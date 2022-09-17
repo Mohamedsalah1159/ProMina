@@ -6,7 +6,7 @@
         <!-- CSS only -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
 
-        <title>Pro Mina</title>
+        <title>Camel Case</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
@@ -37,36 +37,64 @@
         <div class="body">
         @include('includes.alerts.success')
         @include('includes.alerts.error')
-            <a class="new" href="{{route('addNewAlbum')}}">Create New Album</a>
+            <a class="new" href="{{route('addNewShipment')}}">Create New Shipment</a>
         <table class="table">
   <thead class="thead-dark">
     <tr>
       <th scope="col">#</th>
-      <th scope="col">Name</th>
-      <th scope="col">Created at</th>
-      <th scope="col">Process</th>
+      <th scope="col">Code</th>
+      <th scope="col">Shipper</th>
+      <th scope="col">Image</th>
+      <th scope="col">Weight</th>
+      <th scope="col">Description</th>
+      <th scope="col">Price</th>
+      <th scope="col">Status</th>
+      <th scope="col">Created At</th>
+      <th scope="col">Updated At</th>
+      <th scope="col">Change Status</th>
     </tr>
   </thead>
-  
   <tbody>
   
-<?php $i=0 ?>
-  @foreach($albums as $album)
-  <?php $i++?>
-    <tr>
-      <th scope="row">{{$i}}</th>
-      <td>{{$album->name}}</td>
-      <td>{{$album->created_at}}</td>
-      <td class="d-flex justify-content-around"><a href="{{route('album.edit', $album->id)}}" class="btn btn-success">Edit</button>
-        <a onclick="return confirm('are you sure?')" href="{{route('album.delete', $album->id)}}" class="btn btn-danger">Delete</button></td>
-    </tr>
-    @endforeach
+  <?php $i=0 ?>
+  @isset($shipments)
+    @foreach($shipments as $shipment)
+    <?php $i++?>
+      <tr>
+        <th scope="row">{{$i}}</th>
+        <td>{{$shipment->code}}</td>
+        <td>{{$shipment->shipper}}</td>
+        <td><img src='{{public_path("pictures\\$shipment->image")}}'></td>
+        <td>{{$shipment->weight}}</td>
+        <td>{{$shipment->description}}</td>
+        <td>{{$shipment->price}}</td>
+        <td>{{$shipment->status}}</td>
+        <td>{{$shipment->created_at}}</td>
+        <td>{{$shipment->Updated_at}}</td>
+        @if($shipment->status == 0)
+        <td class="d-flex justify-content-around"><a href="{{route('Shipment.edit', $shipment->id)}}" class="btn btn-success">Progress</button>
+        <td class="d-flex justify-content-around"><a href="{{route('Shipment.edit', $shipment->id)}}" class="btn btn-success">Done</button>
+        @elseif($shipment->status == 1)
+        <td class="d-flex justify-content-around"><a href="{{route('Shipment.edit', $shipment->id)}}" class="btn btn-success">Pending</button>
+        <td class="d-flex justify-content-around"><a href="{{route('Shipment.edit', $shipment->id)}}" class="btn btn-success">Done</button>
+        @else
+        <td class="d-flex justify-content-around"><a href="{{route('Shipment.edit', $shipment->id)}}" class="btn btn-success disabled">Done</button>
+        @endif
+        
+        <!--<td class="d-flex justify-content-around"><a href="{{route('Shipment.edit', $shipment->id)}}" class="btn btn-success">Edit</button>
+          <a onclick="return confirm('are you sure?')" href="{{route('Shipment.delete', $shipment->id)}}" class="btn btn-danger">Delete</button></td>-->
+      </tr>
+      @endforeach
+    @endisset
+  
+    </tbody>
+  
 
-  </tbody>
 </table>
-<div class="d-flex">
-                {!! $albums->links() !!}
+    <div class="d-flex">
+                {!! $shipments->links() !!}
             </div>
+
 
         </div>
         <!-- JavaScript Bundle with Popper -->

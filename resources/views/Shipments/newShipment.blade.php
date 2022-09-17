@@ -6,7 +6,7 @@
         <!-- CSS only -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
 
-        <title>Pro Mina</title>
+        <title>Camel Case</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
@@ -26,19 +26,40 @@
         <div class="body">
         @include('includes.alerts.success')
         @include('includes.alerts.error')
-        <form method="Post" action="{{route('album.store')}}" enctype="multipart/form-data">
+        <form method="Post" action="{{route('Shipment.store')}}" enctype="multipart/form-data">
         @csrf
   <div class="form-group">
-    <label for="exampleInputEmail1">Album Name</label>
-    <input type="text" class="form-control" name='name' id="albumName" aria-describedby="emailHelp" placeholder="Enter Album Name">
-    @error('name')
+    <label for="exampleInputEmail1">Shippment Code</label>
+    <input type="text" class="form-control" name='code' id="shipmentCode" aria-describedby="emailHelp" placeholder="Enter Shipment Code">
+    @error('code')
       <span class="text-danger">{{$message}}</span>
     @enderror
   </div>
   <div class="form-group">
-    <label for="exampleInputEmail1">Album Pictures</label>
-    <input type="file" class="form-control" name='pic[]' multiple id="albumPic" >
-    @error('pic')
+    <label for="exampleInputEmail1">Shipper</label>
+    <input type="text" class="form-control" name='shipper'  id="shipper" placeholder="Enter Shipper Name" >
+    @error('shipper')
+      <span class="text-danger">{{$message}}</span>
+    @enderror
+  </div>
+  <div class="form-group">
+    <label for="exampleInputEmail1">Shipment Image</label>
+    <input type="file" class="form-control" name='image'  id="shipmentImage" >
+    @error('image')
+      <span class="text-danger">{{$message}}</span>
+    @enderror
+  </div>
+  <div class="form-group">
+    <label for="exampleInputEmail1">Shipment Weight</label>
+    <input type="text" class="form-control" name='weight' id="shipmentWeight" placeholder="Enter Shipment Weight" >
+    @error('weight')
+      <span class="text-danger">{{$message}}</span>
+    @enderror
+  </div>
+  <div class="form-group">
+    <label for="exampleInputEmail1">Shipment Description</label>
+    <input type="text" class="form-control" name='description' id="shipmentDescription" placeholder="Enter Your Description" >
+    @error('description')
       <span class="text-danger">{{$message}}</span>
     @enderror
   </div>

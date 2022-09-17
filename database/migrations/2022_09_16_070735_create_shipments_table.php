@@ -13,9 +13,15 @@ class CreateAlbumsTable extends Migration
      */
     public function up()
     {
-        Schema::create('albums', function (Blueprint $table) {
+        Schema::create('shipments', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('code')->unique();
+            $table->string('shipper');
+            $table->string('image');
+            $table->float('weight');
+            $table->text('description');
+            $table->integer('price');
+            $table->boolean('status')->default(0)->comment('0=>pending, 1=>progress , 2=>done');
             $table->timestamps();
         });
     }

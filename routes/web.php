@@ -17,13 +17,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 ######################## albums #####################
-Route::group(['namespace'=> 'App\Http\Controllers\Album'], function(){
-    Route::get('/', 'Albums@index')->name('albums');
-    Route::get('createNewAlbum', 'Albums@addNew')->name('addNewAlbum');
-    Route::post('createNewAlbum/store', 'Albums@store')->name('album.store');
-    Route::get('Album/edit/{id}', 'Albums@edit')->name('album.edit');
-    Route::post('Album/update/{id}', 'Albums@update')->name('album.update');
-    Route::post('Album/delete/{id}', 'Albums@destroy')->name('album.delete');
+Route::group(['namespace'=> 'App\Http\Controllers\Shipments'], function(){
+    Route::get('/', 'ShipmentController@index')->name('Shipment');
+    Route::get('createNewShipment', 'ShipmentController@addNew')->name('addNewShipment');
+    Route::post('createNewAlbum/store', 'ShipmentController@store')->name('Shipment.store');
+    Route::get('Album/edit/{id}', 'ShipmentController@edit')->name('Shipment.edit');
+    Route::post('Album/update/{id}', 'ShipmentController@update')->name('Shipment.update');
+    Route::post('Album/delete/{id}', 'ShipmentController@destroy')->name('Shipment.delete');
 
 });
 

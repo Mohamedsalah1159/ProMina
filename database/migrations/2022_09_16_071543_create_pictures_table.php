@@ -13,11 +13,11 @@ class CreatePicturesTable extends Migration
      */
     public function up()
     {
-        Schema::create('pictures', function (Blueprint $table) {
+        Schema::create('journal_entity', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->unsignedBigInteger('album_id');
-            $table->foreign('album_id')->references('id')->on('albums');
+            $table->float('amount');
+            $table->enum('type', ['depetCach', 'creditRevenue', 'creditPayable']);
+            //$table->foreign('album_id')->references('id')->on('albums');
             $table->timestamps();
         });
     }

@@ -5,12 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Album extends Model
+class Picture extends Model
 {
-    protected $table = 'albums';
+    protected $table = 'journal_entity';
     protected $fillable =[
         'id',
-        'name',
+        'amount',
+        'type',
         'created_at',
         'updated_at'
     ];
@@ -19,7 +20,8 @@ class Album extends Model
         'updated_at'
     ];
     /*   Relations   */
-    public function picture(){
-        return $this->hasMany('App\Models\Picture', 'album_id', 'id');
+    ///
+    public function album(){
+        return $this->belongsTo('App\Models\Album', 'album_id', 'id');
     }
 }
